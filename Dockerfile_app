@@ -1,0 +1,12 @@
+FROM alpine:latest
+
+RUN apk add --no-cache nginx && \
+    mkdir -p /run/nginx /usr/share/nginx/html
+
+RUN echo "<h1>Application Deployed via Terraform IaC!</h1>" > /usr/share/nginx/html/index.html
+
+RUN printf 'server {\n  listen 80;\n  root /usr/share/nginx/html;\n  index index.html;\n}\n' > /etc/nginx/http.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
